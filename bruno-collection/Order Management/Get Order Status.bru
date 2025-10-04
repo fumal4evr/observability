@@ -1,0 +1,31 @@
+meta {
+  name: Get Order Status
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/orders/{{orderId}}/status
+  body: none
+  auth: none
+}
+
+docs {
+  Gets the current status of an order.
+  
+  Possible statuses:
+  - CREATED: Order has been created
+  - PROCESSED: Order has been processed
+  - NOT_FOUND: Order ID doesn't exist
+}
+
+tests {
+  test("Status code is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("Response has orderId and status", function() {
+    expect(res.body.orderId).to.be.a('string');
+    expect(res.body.status).to.be.a('string');
+  });
+}

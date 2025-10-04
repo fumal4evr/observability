@@ -1,0 +1,29 @@
+meta {
+  name: Environment Info
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/actuator/env
+  body: none
+  auth: none
+}
+
+docs {
+  Shows environment properties and configuration.
+  
+  Includes:
+  - System properties
+  - Environment variables
+  - Application properties
+  - Configuration sources
+  
+  Useful for debugging configuration issues.
+}
+
+tests {
+  test("Status code is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+}

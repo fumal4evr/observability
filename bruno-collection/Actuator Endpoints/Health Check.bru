@@ -1,0 +1,32 @@
+meta {
+  name: Health Check
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/actuator/health
+  body: none
+  auth: none
+}
+
+docs {
+  Spring Boot Actuator health endpoint.
+  
+  Shows:
+  - Overall application health status
+  - Disk space
+  - Ping status
+  
+  Status should be "UP" when everything is healthy.
+}
+
+tests {
+  test("Status code is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("Health status is UP", function() {
+    expect(res.body.status).to.equal('UP');
+  });
+}

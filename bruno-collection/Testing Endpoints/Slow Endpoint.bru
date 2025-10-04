@@ -1,0 +1,35 @@
+meta {
+  name: Slow Endpoint
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/slow
+  body: none
+  auth: none
+}
+
+docs {
+  Endpoint with artificial delay (2-3 seconds).
+  
+  Use this to:
+  - Test timeout handling
+  - Observe latency metrics
+  - See long-running spans in Zipkin
+  - Test performance monitoring
+}
+
+tests {
+  test("Status code is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("Response time is greater than 2000ms", function() {
+    expect(res.responseTime).to.be.above(2000);
+  });
+  
+  test("Response confirms completion", function() {
+    expect(res.body.message).to.include('delay');
+  });
+}

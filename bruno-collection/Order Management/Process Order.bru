@@ -1,0 +1,33 @@
+meta {
+  name: Process Order
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/orders/{{orderId}}/process
+  body: none
+  auth: none
+}
+
+docs {
+  Initiates asynchronous processing of an order.
+  
+  This endpoint:
+  - Starts async processing
+  - Returns immediately
+  - Updates order status in the background
+  
+  Check order status after a few seconds to see it change to PROCESSED.
+}
+
+tests {
+  test("Status code is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("Response confirms processing started", function() {
+    expect(res.body.message).to.include('processing');
+    expect(res.body.orderId).to.be.a('string');
+  });
+}

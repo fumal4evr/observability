@@ -1,0 +1,43 @@
+meta {
+  name: Call Other Instance
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/call-other-instance
+  body: none
+  auth: none
+}
+
+docs {
+  Demonstrates distributed tracing across instances.
+  
+  When you call Instance 1:
+  - Instance 1 receives the request
+  - Instance 1 calls Instance 2
+  - Instance 2 responds
+  - Instance 1 returns the combined response
+  
+  Check Zipkin to see the full distributed trace with parent-child spans!
+  
+  This is perfect for learning about:
+  - Distributed tracing
+  - Trace context propagation
+  - Service-to-service communication
+  - Span relationships
+}
+
+tests {
+  test("Status code is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("Response has current instance", function() {
+    expect(res.body.currentInstance).to.be.a('string');
+  });
+  
+  test("Response has other instance response", function() {
+    expect(res.body.otherInstanceResponse).to.be.an('object');
+  });
+}

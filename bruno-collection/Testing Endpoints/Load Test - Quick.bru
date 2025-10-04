@@ -1,0 +1,24 @@
+meta {
+  name: Load Test - Quick
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/hello
+  body: none
+  auth: none
+}
+
+docs {
+  Quick load test endpoint.
+  
+  To generate load:
+  1. Use Bruno's "Run" feature
+  2. Or use the script below in terminal
+  
+  Terminal command:
+  for i in {1..50}; do curl http://localhost:8080/api/hello; done
+  
+  Watch metrics in Prometheus and Grafana!
+}

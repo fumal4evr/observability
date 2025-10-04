@@ -1,0 +1,26 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'observability-monitor'
+
+scrape_configs:
+  - job_name: 'api-instance-1'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['api-instance-1:8080']
+        labels:
+          instance: 'instance-1'
+          application: 'observability-api'
+
+  - job_name: 'api-instance-2'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['api-instance-2:8080']
+        labels:
+          instance: 'instance-2'
+          application: 'observability-api'
+
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']

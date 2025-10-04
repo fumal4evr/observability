@@ -1,0 +1,40 @@
+meta {
+  name: Complete Order Flow
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/api/orders
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "type": "premium",
+    "items": ["enterprise-license"],
+    "quantity": 5,
+    "customerId": "CUST-VIP-001"
+  }
+}
+
+docs {
+  Complete order workflow demonstration.
+  
+  This creates an order and you can then:
+  1. Get the order details
+  2. Check the status
+  3. Process the order
+  4. Verify the status changed
+  
+  Watch the observability tools to see the full trace!
+}
+
+script:post-response {
+  const orderId = res.body.id;
+  bru.setVar("lastOrderId", orderId);
+  
+  console.log("Order created:", orderId);
+  console.log("Use this ID in subsequent requests");
+}

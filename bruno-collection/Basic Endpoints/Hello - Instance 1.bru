@@ -1,0 +1,30 @@
+meta {
+  name: Hello - Instance 1
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{instance1}}/api/hello
+  body: none
+  auth: none
+}
+
+docs {
+  Simple hello endpoint that returns instance information.
+  This calls Instance 1 on port 8080.
+}
+
+tests {
+  test("Status code is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("Response has message", function() {
+    expect(res.body.message).to.be.a('string');
+  });
+  
+  test("Response has instance name", function() {
+    expect(res.body.instance).to.equal('instance-1');
+  });
+}

@@ -1,0 +1,33 @@
+meta {
+  name: Prometheus Metrics
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/actuator/prometheus
+  body: none
+  auth: none
+}
+
+docs {
+  Prometheus metrics endpoint in text format.
+  
+  Returns all available metrics that Prometheus scrapes:
+  - HTTP request metrics
+  - JVM metrics
+  - Custom business metrics
+  - System metrics
+  
+  This is what Prometheus reads every 15 seconds.
+}
+
+tests {
+  test("Status code is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("Content type is prometheus text", function() {
+    expect(res.headers['content-type']).to.include('text/plain');
+  });
+}

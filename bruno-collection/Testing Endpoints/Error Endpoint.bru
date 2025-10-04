@@ -1,0 +1,29 @@
+meta {
+  name: Error Endpoint
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/error
+  body: none
+  auth: none
+}
+
+docs {
+  Endpoint that intentionally throws an error.
+  
+  Use this to:
+  - Test error handling
+  - Observe error metrics
+  - See error traces in Zipkin
+  - Verify logging and monitoring
+  
+  Expected: 500 Internal Server Error
+}
+
+tests {
+  test("Status code is 500", function() {
+    expect(res.status).to.equal(500);
+  });
+}

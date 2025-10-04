@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: observability-api
+  
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus,metrics,info,env
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+    tags:
+      application: ${spring.application.name}
+      instance: ${INSTANCE_NAME:default}
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_URL:http://zipkin:9411/api/v2/spans}
+
+logging:
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
+  level:
+    root: INFO
+    com.example.observability: DEBUG
+
+server:
+  port: ${SERVER_PORT:8080}
+
+other:
+  service:
+    url: ${OTHER_SERVICE_URL:http://localhost:8081}

@@ -1,0 +1,30 @@
+meta {
+  name: Metric - HTTP Requests
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/actuator/metrics/http.server.requests
+  body: none
+  auth: none
+}
+
+docs {
+  Detailed metrics for HTTP server requests.
+  
+  Shows:
+  - Request counts
+  - Available tags (uri, method, status, etc.)
+  - Measurements (count, total time, max)
+}
+
+tests {
+  test("Status code is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("Metric has measurements", function() {
+    expect(res.body.measurements).to.be.an('array');
+  });
+}

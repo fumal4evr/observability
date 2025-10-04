@@ -1,0 +1,28 @@
+meta {
+  name: Instance 1 calls Instance 2
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{instance1}}/api/call-other-instance
+  body: none
+  auth: none
+}
+
+docs {
+  Explicitly call Instance 1, which will call Instance 2.
+  
+  Expected flow:
+  Instance 1 (8080) -> Instance 2 (8081)
+}
+
+tests {
+  test("Current instance is instance-1", function() {
+    expect(res.body.currentInstance).to.equal('instance-1');
+  });
+  
+  test("Other instance is instance-2", function() {
+    expect(res.body.otherInstanceResponse.instance).to.equal('instance-2');
+  });
+}

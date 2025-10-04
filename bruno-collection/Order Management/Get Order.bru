@@ -1,0 +1,28 @@
+meta {
+  name: Get Order
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/orders/{{orderId}}
+  body: none
+  auth: none
+}
+
+docs {
+  Retrieves an order by ID.
+  
+  Note: You need to create an order first to get a valid order ID.
+  The Create Order request automatically saves the order ID.
+}
+
+tests {
+  test("Status code is 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  
+  test("Response has order data", function() {
+    expect(res.body.id).to.be.a('string');
+  });
+}
